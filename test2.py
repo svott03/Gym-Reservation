@@ -22,13 +22,8 @@ class Google:
   
   self.driver.find_element_by_xpath('//*[@id="page-wrapper"]/div/div[1]/div/div[3]/p/a').click()
   sleep(3)
-  count = 0
   while True:
-    #prevents infinite loop
-    if count > 10:
-        break
     html_text = self.driver.page_source
-
     soup = BeautifulSoup(html_text, 'lxml')
     #extract div
     mydivs = soup.find_all("div", class_="booking-slot-item")
@@ -44,12 +39,12 @@ class Google:
             #checks spots available
             if not "No spots available" in result:
                 #sends phone msg
-                account_sid = 'ACe0bed68dad8b940d5e8d96a428236816'
-                auth_token = '8ba2cdd189773374ff5e027c54fd8e5b'
+                account_sid = 'sid'
+                auth_token = 'token'
                 client = Client(account_sid, auth_token)
                 message = client.messages \
                     .create(
-                        to='+17023570808',
+                        to='phone_number',
                         from_="+12135681813",
                         body = "Gym Spot Available"
                     )
@@ -59,7 +54,6 @@ class Google:
 
     
     sleep(2)
-    count += 1
     self.driver.refresh()
     sleep(3)
 
